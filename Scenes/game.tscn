@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://umiicwqjh37f"]
+
+[ext_resource type="PackedScene" uid="uid://bbmi474k2cll6" path="res://Scenes/background.tscn" id="1_3dryh"]
+[ext_resource type="Script" uid="uid://bh0edsmwhm3u1" path="res://Scenes/game.gd" id="1_wowpa"]
+[ext_resource type="PackedScene" uid="uid://cglurkscdq4il" path="res://Scenes/player_1.tscn" id="2_wowpa"]
+[ext_resource type="PackedScene" uid="uid://blnh8ob7omb3t" path="res://Scenes/player_2.tscn" id="3_i6g32"]
+[ext_resource type="PackedScene" uid="uid://crhbmna3f0su5" path="res://Scenes/ball.tscn" id="4_1l0tm"]
+[ext_resource type="AudioStream" uid="uid://brgeeexvx58lg" path="res://Audio/main-theme.wav" id="6_i6g32"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6g32"]
+size = Vector2(1437, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1l0tm"]
+size = Vector2(1428, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wowpa"]
+size = Vector2(17, 808)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_wowpa")
+
+[node name="Background" parent="." instance=ExtResource("1_3dryh")]
+position = Vector2(697, 398)
+
+[node name="Player1" parent="." instance=ExtResource("2_wowpa")]
+position = Vector2(23, 317)
+
+[node name="Player2" parent="." instance=ExtResource("3_i6g32")]
+position = Vector2(1247, 309)
+
+[node name="Ball" parent="." instance=ExtResource("4_1l0tm")]
+position = Vector2(643, 313)
+
+[node name="Boundary_top_btm" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="top" type="CollisionShape2D" parent="Boundary_top_btm"]
+position = Vector2(702, -30)
+shape = SubResource("RectangleShape2D_i6g32")
+
+[node name="btm" type="CollisionShape2D" parent="Boundary_top_btm"]
+position = Vector2(690, 748)
+shape = SubResource("RectangleShape2D_1l0tm")
+
+[node name="Boundary_lef_rig" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="left" type="CollisionShape2D" parent="Boundary_lef_rig"]
+position = Vector2(-7, 368)
+shape = SubResource("RectangleShape2D_wowpa")
+
+[node name="right" type="CollisionShape2D" parent="Boundary_lef_rig"]
+position = Vector2(1283, 376)
+shape = SubResource("RectangleShape2D_wowpa")
+
+[node name="BG-Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_i6g32")
+autoplay = true
+
+[connection signal="body_entered" from="Boundary_top_btm" to="." method="_on_boundary_top_btm_body_entered"]
+[connection signal="body_entered" from="Boundary_lef_rig" to="." method="_on_boundary_lef_rig_body_entered"]

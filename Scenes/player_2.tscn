@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://blnh8ob7omb3t"]
+
+[ext_resource type="Script" uid="uid://cesdugl8kkg3d" path="res://Scenes/player_2.gd" id="1_cgts5"]
+[ext_resource type="Texture2D" uid="uid://bl3lwj3rbe8g7" path="res://Graphics/Player.png" id="1_mkara"]
+[ext_resource type="AudioStream" uid="uid://20un27hty7rk" path="res://Audio/paddle-hit.wav" id="3_a3adp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cgts5"]
+size = Vector2(7, 80)
+
+[node name="Player2" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_cgts5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mkara")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 2)
+shape = SubResource("RectangleShape2D_cgts5")
+
+[node name="paddle-hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_a3adp")
