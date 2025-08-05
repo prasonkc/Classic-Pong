@@ -11,7 +11,8 @@ var rand
 var x_direction = -1  # -1 = left, 1 = right
 var y_direction = 1 #1=down, -1 = up
 var boundary_ball_collision_y
-var boundary_ball_collision_x
+var boundary_ball_collision_x_left
+var boundary_ball_collision_x_right
 
 func _ready():
 	player2_position = get_parent().get_node("Player2")
@@ -26,8 +27,11 @@ func _ready():
 	boundary_ball_collision_y = get_parent()
 	boundary_ball_collision_y.connect("ball_collision_y", Callable(self, "_on_ball_collision_y"))
 	
-	boundary_ball_collision_x = get_parent()
-	boundary_ball_collision_x.connect("ball_collision_x", Callable(self, "_on_ball_collision_x"))
+	boundary_ball_collision_x_left = get_parent()
+	boundary_ball_collision_x_left.connect("ball_collision_x_left", Callable(self, "_on_ball_collision_x_left"))
+	
+	boundary_ball_collision_x_right = get_parent()
+	boundary_ball_collision_x_right.connect("ball_collision_x_right", Callable(self, "_on_ball_collision_x_right"))
 
 	rand = randi_range(-70, 70)
 
@@ -61,8 +65,18 @@ func _on_ball_collision_y():
 	y_direction *= -1
 	$"wall-bounce".play()
 
-func _on_ball_collision_x():
+var player_lives = 3
+var comp_lives = 3
+func _on_ball_collision_x_left():
 	player2_position = get_parent().get_node("Player2")
 	player2_position.connect("player_position", _on_player2_ready)
 	speed = 300
+	comp_lives -= 1;  
+	$score.play()
+	
+func _on_ball_collision_x_right():
+	player2_position = get_parent().get_node("Player2")
+	player2_position.connect("player_position", _on_player2_ready)
+	speed = 300
+	player_lives -= 1
 	$score.play()

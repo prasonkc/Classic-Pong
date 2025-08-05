@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://umiicwqjh37f"]
+[gd_scene load_steps=11 format=3 uid="uid://umiicwqjh37f"]
 
 [ext_resource type="PackedScene" uid="uid://bbmi474k2cll6" path="res://Scenes/background.tscn" id="1_3dryh"]
 [ext_resource type="Script" uid="uid://bh0edsmwhm3u1" path="res://Scenes/game.gd" id="1_wowpa"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://blnh8ob7omb3t" path="res://Scenes/player_2.tscn" id="3_i6g32"]
 [ext_resource type="PackedScene" uid="uid://crhbmna3f0su5" path="res://Scenes/ball.tscn" id="4_1l0tm"]
 [ext_resource type="AudioStream" uid="uid://brgeeexvx58lg" path="res://Audio/main-theme.wav" id="6_i6g32"]
+[ext_resource type="Texture2D" uid="uid://bch51oya6ce3j" path="res://Graphics/ball.png" id="7_1l0tm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i6g32"]
 size = Vector2(1437, 53)
@@ -43,21 +44,61 @@ shape = SubResource("RectangleShape2D_i6g32")
 position = Vector2(690, 748)
 shape = SubResource("RectangleShape2D_1l0tm")
 
-[node name="Boundary_lef_rig" type="Area2D" parent="."]
+[node name="Boundary_left" type="Area2D" parent="."]
 collision_layer = 3
 collision_mask = 3
 
-[node name="left" type="CollisionShape2D" parent="Boundary_lef_rig"]
+[node name="left" type="CollisionShape2D" parent="Boundary_left"]
 position = Vector2(-7, 368)
 shape = SubResource("RectangleShape2D_wowpa")
 
-[node name="right" type="CollisionShape2D" parent="Boundary_lef_rig"]
-position = Vector2(1283, 376)
+[node name="Boundary_right" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="right" type="CollisionShape2D" parent="Boundary_right"]
+position = Vector2(1281, 347)
 shape = SubResource("RectangleShape2D_wowpa")
 
 [node name="BG-Music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(3, -4)
 stream = ExtResource("6_i6g32")
 autoplay = true
 
+[node name="PlayerLives" type="Node2D" parent="."]
+
+[node name="life1" type="Sprite2D" parent="PlayerLives"]
+position = Vector2(1154, 698)
+scale = Vector2(0.710938, 0.710938)
+texture = ExtResource("7_1l0tm")
+
+[node name="life2" type="Sprite2D" parent="PlayerLives"]
+position = Vector2(1249, 696)
+scale = Vector2(0.753906, 0.722656)
+texture = ExtResource("7_1l0tm")
+
+[node name="life3" type="Sprite2D" parent="PlayerLives"]
+position = Vector2(1201, 697)
+scale = Vector2(0.710938, 0.710938)
+texture = ExtResource("7_1l0tm")
+
+[node name="EnemyLives" type="Node2D" parent="."]
+
+[node name="life1" type="Sprite2D" parent="EnemyLives"]
+position = Vector2(22, 28.0001)
+scale = Vector2(0.710938, 0.710938)
+texture = ExtResource("7_1l0tm")
+
+[node name="life2" type="Sprite2D" parent="EnemyLives"]
+position = Vector2(112, 25)
+scale = Vector2(0.753906, 0.722656)
+texture = ExtResource("7_1l0tm")
+
+[node name="life3" type="Sprite2D" parent="EnemyLives"]
+position = Vector2(66, 26)
+scale = Vector2(0.710938, 0.710938)
+texture = ExtResource("7_1l0tm")
+
 [connection signal="body_entered" from="Boundary_top_btm" to="." method="_on_boundary_top_btm_body_entered"]
-[connection signal="body_entered" from="Boundary_lef_rig" to="." method="_on_boundary_lef_rig_body_entered"]
+[connection signal="body_entered" from="Boundary_left" to="." method="_on_boundary_left_body_entered"]
+[connection signal="body_entered" from="Boundary_right" to="." method="_on_boundary_right_body_entered"]
